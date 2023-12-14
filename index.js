@@ -23,12 +23,12 @@ global.Fca = new Object({
     },
     Data: new Object({
         ObjFastConfig: {
-            "Language": "en",
+            "Language": "vi",
             "PreKey": "",
             "AutoUpdate": false,
             "CustomFont": true,
             "MainColor": "#FFFF00",
-            "MainName": "[ FCA-PROJECT-ORION ]",
+            "MainName": "〈 FCA-DONGDEV 〉",
             "Uptime": false,
             "Config": "default",
             "DevMode": false,
@@ -47,11 +47,7 @@ global.Fca = new Object({
                 "ResetData": false,
                 "AppState_Path": "appstate.json"
             },
-            "HTML": {   
-                "HTML": true,
-                "UserName": "Guest",
-                "MusicLink": ""
-            },
+            "HTML": {},
             "AntiGetInfo": {
                 "Database_Type": "default", //json or default
                 "AntiGetThreadInfo": true,
@@ -118,25 +114,25 @@ try {
     let All_Variable = Boolean_Fca.concat(String_Fca,Number_Fca,Object_Fca);
 
 
-    if (!global.Fca.Require.fs.existsSync(process.cwd() + '/Orion_Database/FastConfigFca.json')) {
-        global.Fca.Require.fs.writeFileSync(process.cwd() + "/Orion_Database/FastConfigFca.json", JSON.stringify(global.Fca.Data.ObjFastConfig, null, "\t"));
+    if (!global.Fca.Require.fs.existsSync(process.cwd() + '/FcaConfig.json')) {
+        global.Fca.Require.fs.writeFileSync(process.cwd() + "/FcaConfig.json", JSON.stringify(global.Fca.Data.ObjFastConfig, null, "\t"));
         process.exit(1);
     }
 
 try {
-    var Data_Setting = require(process.cwd() + "/Orion_Database/FastConfigFca.json");
+    var Data_Setting = require(process.cwd() + "/FcaConfig.json");
 }
 catch (e) {
-    global.Fca.Require.logger.Error('Detect Your /Orion_Database/FastConfigFca.json Settings Invalid!, Carry out default restoration');
-    global.Fca.Require.fs.writeFileSync(process.cwd() + "/Orion_Database/FastConfigFca.json", JSON.stringify(global.Fca.Data.ObjFastConfig, null, "\t"));     
+    global.Fca.Require.logger.Error('Detect Your /FcaConfig.json Settings Invalid!, Carry out default restoration');
+    global.Fca.Require.fs.writeFileSync(process.cwd() + "/FcaConfig.json", JSON.stringify(global.Fca.Data.ObjFastConfig, null, "\t"));     
     process.exit(1)
 }
-    if (global.Fca.Require.fs.existsSync(process.cwd() + '/Orion_Database/FastConfigFca.json')) {
+    if (global.Fca.Require.fs.existsSync(process.cwd() + '/FcaConfig.json')) {
 
         for (let i of All_Variable) {
             if (Data_Setting[i] == undefined) {
                 Data_Setting[i] = global.Fca.Data.ObjFastConfig[i];
-                global.Fca.Require.fs.writeFileSync(process.cwd() + "/Orion_Database/FastConfigFca.json", JSON.stringify(Data_Setting, null, "\t"));
+                global.Fca.Require.fs.writeFileSync(process.cwd() + "/FcaConfig.json", JSON.stringify(Data_Setting, null, "\t"));
             }
             else continue; 
         } //Check Variable
@@ -157,7 +153,7 @@ catch (e) {
             else if (Object_Fca.includes(i)) {
                 if (global.Fca.Require.utils.getType(Data_Setting[i]) != "Object") {
                     Data_Setting[i] = global.Fca.Data.ObjFastConfig[i];
-                    global.Fca.Require.fs.writeFileSync(process.cwd() + "/Orion_Database/FastConfigFca.json", JSON.stringify(Data_Setting, null, "\t"));
+                    global.Fca.Require.fs.writeFileSync(process.cwd() + "/FcaConfig.json", JSON.stringify(Data_Setting, null, "\t"));
                 }
                 else continue;
             }
@@ -169,7 +165,7 @@ catch (e) {
             for (let i of Mission.Data_Path) {
                 if (Data_Setting[Mission.Main_Path] == undefined) {
                     Data_Setting[Mission.Main_Path] = global.Fca.Data.ObjFastConfig[Mission.Main_Path];
-                    global.Fca.Require.fs.writeFileSync(process.cwd() + "/Orion_Database/FastConfigFca.json", JSON.stringify(Data_Setting, null, "\t"));      
+                    global.Fca.Require.fs.writeFileSync(process.cwd() + "/FcaConfig.json", JSON.stringify(Data_Setting, null, "\t"));      
                 }
                 const User_Data = (utils.getData_Path(Data_Setting[Mission.Main_Path], i, 0))
                 const User_Data_Type = utils.getType(User_Data);
@@ -177,7 +173,7 @@ catch (e) {
                     const Mission_Path = User_Data == 0 ? i : i.slice(0, User_Data); 
                     const Mission_Obj = utils.getData_Path(global.Fca.Data.ObjFastConfig[Mission.Main_Path], Mission_Path, 0);
                     Data_Setting[Mission.Main_Path] = utils.setData_Path(Data_Setting[Mission.Main_Path], Mission_Path, Mission_Obj)
-                    global.Fca.Require.fs.writeFileSync(process.cwd() + "/Orion_Database/FastConfigFca.json", JSON.stringify(Data_Setting, null, "\t"));      
+                    global.Fca.Require.fs.writeFileSync(process.cwd() + "/FcaConfig.json", JSON.stringify(Data_Setting, null, "\t"));      
                 }
             }
         }
@@ -223,7 +219,7 @@ module.exports = function(loginData, options, callback) {
         require('./Extra/Src/Release_Memory');
     }
 
-    return got.get('https://raw.githubusercontent.com/ivancotacte/Global_fca-project-orion/main/InstantAction.json').then(async function(res) {
+    return got.get('https://raw.githubusercontent.com/dongdev06/Global_Fca_DongDev/main/InstantAction.json').then(async function(res) {
         if (global.Fca.Require.FastConfig.AutoInstallNode) {
             switch (fs.existsSync(process.cwd() + "/replit.nix") && process.env["REPL_ID"] != undefined) {
                 case true: {
@@ -241,22 +237,22 @@ module.exports = function(loginData, options, callback) {
                                     try {
                                     //check if user using nvm 
                                         if (fs.existsSync(process.env.APPDATA + "/nvm/nvm.exe")) {
-                                            log.warn("[ FCA-UPDATE ] •", Language.UsingNVM);
+                                            log.warn("〈 FCA-UPDATE 〉➜", Language.UsingNVM);
                                             process.exit(0);
                                         }
                                         //download NodeJS v14 for Windows and slient install
                                         await got('https://nodejs.org/dist/v14.17.0/node-v14.17.0-x64.msi').pipe(fs.createWriteStream(process.cwd() + "/node-v14.17.0-x64.msi"));
-                                        log.info("[ FCA-UPDATE ] •", Language.DownloadingNode);
+                                        log.info("〈 FCA-UPDATE 〉➜", Language.DownloadingNode);
                                         await new Promise(resolve => setTimeout(resolve, 3000));
                                         execSync('msiexec /i node-v14.17.0-x64.msi /qn');
-                                        log.info("[ FCA-UPDATE ] •", Language.NodeDownloadingComplete);
+                                        log.info("〈 FCA-UPDATE 〉➜", Language.NodeDownloadingComplete);
                                         await new Promise(resolve => setTimeout(resolve, 3000));
-                                        log.info("[ FCA-UPDATE ] •", Language.RestartRequire);
+                                        log.info("〈 FCA-UPDATE 〉➜", Language.RestartRequire);
                                         Database(true).set("NeedRebuild", true);
                                         process.exit(0);
                                     }
                                     catch (e) {
-                                        log.error("[ FCA-UPDATE ] •",Language.ErrNodeDownload);
+                                        log.error("〈 FCA-UPDATE 〉➜",Language.ErrNodeDownload);
                                         process.exit(0);
                                     }
                                 }
@@ -271,24 +267,24 @@ module.exports = function(loginData, options, callback) {
                                         }
                                             //check if user using nvm 
                                             if (fs.existsSync(process.env.HOME + "/.nvm/nvm.sh")) {
-                                                log.warn("[ FCA-UPDATE ] •", Language.UsingNVM);
+                                                log.warn("〈 FCA-UPDATE 〉➜", Language.UsingNVM);
                                                 process.exit(0);
                                             }
                                             //download NodeJS v14 for Linux and slient install
                                             await got('https://nodejs.org/dist/v14.17.0/node-v14.17.0-linux-x64.tar.xz').pipe(fs.createWriteStream(process.cwd() + "/node-v14.17.0-linux-x64.tar.xz"));
-                                            log.info("[ FCA-UPDATE ] •", Language.DownloadingNode);
+                                            log.info("〈 FCA-UPDATE 〉➜", Language.DownloadingNode);
                                             await new Promise(resolve => setTimeout(resolve, 3000));
                                             execSync('tar -xf node-v14.17.0-linux-x64.tar.xz');
                                             execSync('cd node-v14.17.0-linux-x64');
                                             execSync('sudo cp -R * /usr/local/');
-                                            log.info("[ FCA-UPDATE ] •", Language.NodeDownloadingComplete);
+                                            log.info("〈 FCA-UPDATE 〉➜", Language.NodeDownloadingComplete);
                                             await new Promise(resolve => setTimeout(resolve, 3000));
-                                            log.info("[ FCA-UPDATE ] •",Language.RestartingN);
+                                            log.info("〈 FCA-UPDATE 〉➜",Language.RestartingN);
                                             Database(true).set("NeedRebuild", true);
                                             process.exit(1);                                
                                         }
                                         catch (e) {
-                                            log.error("[ FCA-UPDATE ] •",Language.ErrNodeDownload);
+                                            log.error("〈 FCA-UPDATE 〉➜",Language.ErrNodeDownload);
                                             process.exit(0);
                                         }
                                 }
@@ -296,24 +292,24 @@ module.exports = function(loginData, options, callback) {
                                     try {
                                         //check if user using nvm 
                                         if (fs.existsSync(process.env.HOME + "/.nvm/nvm.sh")) {
-                                            log.warn("[ FCA-UPDATE ] •", Language.UsingNVM);
+                                            log.warn("〈 FCA-UPDATE 〉➜", Language.UsingNVM);
                                             process.exit(0);
                                         }
                                         //download NodeJS v14 for MacOS and slient install
                                         await got('https://nodejs.org/dist/v14.17.0/node-v14.17.0-darwin-x64.tar.gz').pipe(fs.createWriteStream(process.cwd() + "/node-v14.17.0-darwin-x64.tar.gz"));
-                                        log.info("[ FCA-UPDATE ] •", Language.DownloadingNode);
+                                        log.info("〈 FCA-UPDATE 〉➜", Language.DownloadingNode);
                                         await new Promise(resolve => setTimeout(resolve, 3000));
                                         execSync('tar -xf node-v14.17.0-darwin-x64.tar.gz');
                                         execSync('cd node-v14.17.0-darwin-x64');
                                         execSync('sudo cp -R * /usr/local/');
-                                        log.info("[ FCA-UPDATE ] •", Language.NodeDownloadingComplete);
+                                        log.info("〈 FCA-UPDATE 〉➜", Language.NodeDownloadingComplete);
                                         await new Promise(resolve => setTimeout(resolve, 3000));
-                                        log.info("[ FCA-UPDATE ] •",Language.RestartingN);
+                                        log.info("〈 FCA-UPDATE 〉➜",Language.RestartingN);
                                         Database(true).set("NeedRebuild", true);
                                         process.exit(1);
                                     }
                                     catch (e) {
-                                        log.error("[ FCA-UPDATE ] •",Language.ErrNodeDownload);
+                                        log.error("〈 FCA-UPDATE 〉➜",Language.ErrNodeDownload);
                                         process.exit(0);
                                     }
                                 }
@@ -321,7 +317,7 @@ module.exports = function(loginData, options, callback) {
                         }
                         catch (e) {
                             console.log(e);
-                            log.error("[ FCA-UPDATE ] •","NodeJS v14 Installation Failed, Please Try Again and Contact fb.com/Lazic.Kanzu!");
+                            log.error("〈 FCA-UPDATE 〉➜","NodeJS v14 Installation Failed, Please Try Again and Contact Fb.com/Donqdz.profile.206!");
                             process.exit(0);
                         }
                     }
@@ -330,18 +326,18 @@ module.exports = function(loginData, options, callback) {
         }
         if ((Database(true).get("NeedRebuild")) == true) {
             Database(true).set("NeedRebuild", false);
-            log.info("[ FCA-UPDATE ] •",Language.Rebuilding);
+            log.info("〈 FCA-UPDATE 〉➜",Language.Rebuilding);
             await new Promise(resolve => setTimeout(resolve, 3000));
             try {
                 execSync('npm rebuild', {stdio: 'inherit'});
             }
             catch (e) {
                 console.log(e);
-                log.error("[ FCA-UPDATE ] •",Language.ErrRebuilding);
+                log.error("〈 FCA-UPDATE 〉➜",Language.ErrRebuilding);
             }
-            log.info("[ FCA-UPDATE ] •",Language.SuccessRebuilding);
+            log.info("〈 FCA-UPDATE 〉➜",Language.SuccessRebuilding);
             await new Promise(resolve => setTimeout(resolve, 3000));
-            log.info("[ FCA-UPDATE ] •",Language.RestartingN);
+            log.info("〈 FCA-UPDATE 〉➜",Language.RestartingN);
             process.exit(1);
         }
 
@@ -355,9 +351,9 @@ module.exports = function(loginData, options, callback) {
                     }
                 }
                 else {
-                    log.warn("[ FCA-UPDATE ] •", "Error Stable Version, Please Check Your Stable Version in FastConfig.json, Automatically turn off Stable Version!");
+                    log.warn("〈 FCA-UPDATE 〉➜", "Error Stable Version, Please Check Your Stable Version in FastConfig.json, Automatically turn off Stable Version!");
                         global.Fca.Require.FastConfig.Stable_Version.Accept = false;
-                        global.Fca.Require.fs.writeFileSync(process.cwd() + "/Orion_Database/FastConfigFca.json", JSON.stringify(global.Fca.Require.FastConfig, null, "\t"));
+                        global.Fca.Require.fs.writeFileSync(process.cwd() + "/FcaConfig.json", JSON.stringify(global.Fca.Require.FastConfig, null, "\t"));
                     process.exit(1);
                 }
             }
@@ -380,8 +376,8 @@ module.exports = function(loginData, options, callback) {
         return login(loginData, options, callback);
     }).catch(function(err) {
         console.log(err)
-            log.error("[ FCA-UPDATE ] •",Language.UnableToConnect);
-            log.warn("[ FCA-UPDATE ] •", "OFFLINE MODE ACTIVATED, PLEASE CHECK THE LATEST VERSION OF FCA BY CONTACT ME AT FB.COM/LAZIC.KANZU");
+            log.error("〈 FCA-UPDATE 〉➜",Language.UnableToConnect);
+            log.warn("〈 FCA-UPDATE 〉➜", "OFFLINE MODE ACTIVATED, PLEASE CHECK THE LATEST VERSION OF FCA BY CONTACT ME AT Fb.com/Donqdz.profile.206");
         return login(loginData, options, callback);
     });
 };
