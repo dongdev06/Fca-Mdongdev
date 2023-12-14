@@ -6,15 +6,15 @@ const logger = require("../logger");
 const getText = global.Fca.getText;
 var language = require("../Language/index.json");
 const fs = require("fs");
-language = language.find(i => i.Language == require(process.cwd() + "/Orion_Database/FastConfigFca.json").Language).Folder.ExtraGetThread;
+language = language.find(i => i.Language == require(process.cwd() + "/FcaConfig.json").Language).Folder.ExtraGetThread;
 
 if (global.Fca.Require.FastConfig.AntiGetInfo.Database_Type == "json") {
-    if (!fs.existsSync(process.cwd() + "/Orion_Database/Threads.json")) {
-        fs.writeFileSync(process.cwd() + "/Orion_Database/Threads.json",JSON.stringify({}));
+    if (!fs.existsSync(process.cwd() + "/Dongdev_Database/Threads.json")) {
+        fs.writeFileSync(process.cwd() + "/Dongdev_Database/Threads.json",JSON.stringify({}));
     }
 }
 else if (global.Fca.Require.FastConfig.AntiGetInfo.Database_Type != "default" && global.Fca.Require.FastConfig.AntiGetInfo.Database_Type != "json") {
-    logger.Warning("Database_Type in /Orion_Database/FastConfigFca.json is not valid. Only default and json are valid.");
+    logger.Warning("Database_Type in /FcaConfig.json is not valid. Only default and json are valid.");
     process.exit(0);
 }
 
@@ -32,11 +32,11 @@ exports.createData = function(threadID,threadData) {
     else if (global.Fca.Require.FastConfig.AntiGetInfo.Database_Type == "json") {
         try {
             try {
-                var data = require(process.cwd() + "/Orion_Database/Threads.json");
+                var data = require(process.cwd() + "/Dongdev_Database/Threads.json");
             }
             catch (e) {
                 var data = {};
-                fs.writeFileSync(process.cwd() + "/Orion_Database/Threads.json",JSON.stringify(data));
+                fs.writeFileSync(process.cwd() + "/Dongdev_Database/Threads.json",JSON.stringify(data));
             }
             
             data[String(threadID)] = Object(threadData);
