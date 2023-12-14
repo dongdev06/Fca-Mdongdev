@@ -1,20 +1,20 @@
 {
-  "name": "fca-project-orion",
-  "version": "1.1.15",
-  "description": "",
+  "name": "fca-mdongdev",
+  "version": "4.8.15",
+  "description": "Facebook Chat Api",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
   },
-  "author": "",
+  "author": "DongDev",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ivancotacte/fca-project-orion/issues"
+    "url": "https://github.com/dongdev06/Fca-Mdongdev/issues"
   },
-  "homepage": "https://github.com/ivancotacte/fca-project-orion#readme",
+  "homepage": "https://github.com/dongdev06/Fca-Mdongdev#readme",
   "repository": {
     "type": "git",
-    "url": "git://github.com/ivancotacte/fca-project-orion.git"
+    "url": "git://github.com/dongdev06/Fca-Mdongdev.git"
   },
   "dependencies": {
     "aes-js": "latest",
@@ -89,5 +89,8 @@
       ]
     }
   },
-  "keywords": []
+  "keywords": [
+    "fca-mdongdev",
+    "fca"
+  ]
 }
